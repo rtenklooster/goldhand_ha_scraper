@@ -13,25 +13,11 @@ else
   echo "[DEBUG] Map /data bestaat niet."
 fi
 
-# --- Altijd laatste code ophalen en builden ---
-cd /app
-if [ -d .git ]; then
-  echo "[DEBUG] Haal laatste code op van GitHub..."
-  git pull origin main || echo "[DEBUG] git pull mislukt, ga verder met bestaande code."
-  npm install
-  npm run build
-  cd /app/front-end
-  npm install
-  npm run build
-  cd /app
-else
-  echo "[DEBUG] Geen .git directory gevonden, skip update."
-fi
-
 # Read options from Home Assistant
 OPTIONS_FILE="/data/options.json"
 DB_URL=$(jq -r '.db_url' "$OPTIONS_FILE")
 DOWNLOAD_DB=$(jq -r '.download_db' "$OPTIONS_FILE")
+UPDATE_SOURCE=$(jq -r '.update_source' "$OPTIONS_FILE")
 BOT_TOKEN=$(jq -r '.bot_token' "$OPTIONS_FILE")
 DEFAULT_SCRAPE_INTERVAL_MINUTES=$(jq -r '.default_scrape_interval_minutes' "$OPTIONS_FILE")
 DATABASE_TYPE=$(jq -r '.database_type' "$OPTIONS_FILE")
@@ -46,6 +32,25 @@ PROXY_URL=$(jq -r '.proxy_url' "$OPTIONS_FILE")
 LOG_LEVEL=$(jq -r '.log_level' "$OPTIONS_FILE")
 WEB_URL=$(jq -r '.web_url' "$OPTIONS_FILE")
 ADMIN_TOKEN=$(jq -r '.admin_token' "$OPTIONS_FILE")
+
+# --- Optioneel laatste code ophalen en builden ---
+if [ "$UPDATE_SOURCE" = "true" ]; then
+  cd /app
+  if [ -d .git ]; then
+    echo "[DEBUG] Haal laatste code op van GitHub..."
+    git pull origin main || echo "[DEBUG] git pull mislukt, ga verder met bestaande code."
+    npm install
+    npm run build
+    cd /app/front-end
+    npm install
+    npm run build
+    cd /app
+  else
+    echo "[DEBUG] Geen .git directory gevonden, skip update."
+  fi
+else
+  echo "[DEBUG] Source update/build is uitgeschakeld via configuratie."
+fi
 
 # Zet het database pad altijd absoluut in /data
 if [[ "$DATABASE_PATH" = /* ]]; then

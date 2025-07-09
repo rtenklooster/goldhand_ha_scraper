@@ -12,7 +12,7 @@ WORKDIR /app
 RUN git clone https://github.com/rtenklooster/Universal-scraper-with-telegram-notifications.git .
 
 # Create dummy .env for build
-RUN echo "TELEGRAM_BOT_TOKEN=dummy\nDATABASE_TYPE=sqlite\nDATABASE_PATH=./data/multiscraper.db" > .env
+RUN echo "TELEGRAM_BOT_TOKEN=dummy\nDATABASE_TYPE=mssql\nDATABASE_PATH=/data/multiscraper.db" > .env
 
 # Install backend dependencies
 RUN npm install
