@@ -1,0 +1,25 @@
+{
+  "name": "Goldhand Universal Scraper",
+  "version": "1.0.0",
+  "slug": "gh_universal_scraper",
+  "description": "Universal scraper met Telegram notificaties en web frontend.",
+  "startup": "services",
+  "boot": "auto",
+  "ingress": true,
+  "ingress_port": 3000,
+  "panel_icon": "mdi:web",
+  "panel_title": "GH Universal Scraper",
+  "host_network": false,
+  "options": {
+    "db_url": "",
+    "download_db": false,
+    "bot_token": ""
+  },
+  "schema": {
+    "db_url": "str?",
+    "download_db": "bool",
+    "bot_token": "str"
+  },
+  "map": ["config:rw"],
+  "arch": ["amd64", "aarch64", "armv7"]
+}
