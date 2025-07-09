@@ -14,9 +14,13 @@ RUN git clone https://github.com/rtenklooster/Universal-scraper-with-telegram-no
 # Install backend dependencies
 RUN npm install
 
+# Build backend (nodig voor dist/index.js)
+RUN npm run build
+
 # Install frontend dependencies
 WORKDIR /app/front-end
 RUN npm install
+RUN npm run build
 
 # Return to app dir
 WORKDIR /app
