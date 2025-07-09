@@ -86,13 +86,21 @@ WEB_URL=$WEB_URL
 ADMIN_TOKEN=$ADMIN_TOKEN
 EOF
 
-# Start backend (scraper) in background
-npm start &
+# Start backend (scraper)
+if [ "$START_FRONTEND" = "true" ]; then
+  echo "[DEBUG] Start backend (scraper) op de achtergrond..."
+  npm start &
+else
+  echo "[DEBUG] Start backend (scraper) op de voorgrond..."
+  npm start || { echo "[FOUT] Backend (scraper) is niet gestart!"; exit 1; }
+fi
 
 # Start frontend (npm) alleen als start_frontend true is
 if [ "$START_FRONTEND" = "true" ]; then
   cd /app/front-end
-  npm start
+  npm start || { echo "[FOUT] Front-end is niet gestart!"; exit 1; }
 else
   echo "[DEBUG] Front-end wordt niet gestart (start_frontend=false)."
+  # Als backend op achtergrond draait, wacht op child-processen
+  wait
 fi
