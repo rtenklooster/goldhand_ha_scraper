@@ -13,6 +13,21 @@ else
   echo "[DEBUG] Map /data bestaat niet."
 fi
 
+# --- Altijd laatste code ophalen en builden ---
+cd /app
+if [ -d .git ]; then
+  echo "[DEBUG] Haal laatste code op van GitHub..."
+  git pull origin main || echo "[DEBUG] git pull mislukt, ga verder met bestaande code."
+  npm install
+  npm run build
+  cd /app/front-end
+  npm install
+  npm run build
+  cd /app
+else
+  echo "[DEBUG] Geen .git directory gevonden, skip update."
+fi
+
 # Read options from Home Assistant
 OPTIONS_FILE="/data/options.json"
 DB_URL=$(jq -r '.db_url' "$OPTIONS_FILE")
