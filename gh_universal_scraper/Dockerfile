@@ -11,6 +11,9 @@ WORKDIR /app
 # Clone the universal scraper repo
 RUN git clone https://github.com/rtenklooster/Universal-scraper-with-telegram-notifications.git .
 
+# Create dummy .env for build
+RUN echo "TELEGRAM_BOT_TOKEN=dummy\nDATABASE_TYPE=sqlite\nDATABASE_PATH=./data/multiscraper.db" > .env
+
 # Install backend dependencies
 RUN npm install
 

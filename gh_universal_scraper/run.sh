@@ -27,11 +27,11 @@ ADMIN_TOKEN=$(jq -r '.admin_token' "$OPTIONS_FILE")
 # Download DB if requested
 if [ "$DOWNLOAD_DB" = "true" ] && [ -n "$DB_URL" ]; then
   echo "Downloading database from $DB_URL ..."
-  curl -L "$DB_URL" -o "$CONFIG_DIR/scraper.db"
+  # Zorg dat de database exact op het pad van DATABASE_PATH komt te staan
+  DB_DIR=$(dirname "$DATABASE_PATH")
+  mkdir -p "$DB_DIR"
+  curl -L "$DB_URL" -o "$DATABASE_PATH"
 fi
-
-# Symlink database to expected location
-ln -sf "$CONFIG_DIR/scraper.db" /app/scraper.db
 
 # Maak .env file aan voor de scraper
 cat > .env <<EOF
