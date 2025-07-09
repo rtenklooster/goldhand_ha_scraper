@@ -1,4 +1,4 @@
-FROM node:20-bullseye
+FROM node:23.10.0-bullseye
 
 # Install git and jq
 RUN apt-get update && \
