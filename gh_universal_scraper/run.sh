@@ -32,6 +32,7 @@ PROXY_URL=$(jq -r '.proxy_url' "$OPTIONS_FILE")
 LOG_LEVEL=$(jq -r '.log_level' "$OPTIONS_FILE")
 WEB_URL=$(jq -r '.web_url' "$OPTIONS_FILE")
 ADMIN_TOKEN=$(jq -r '.admin_token' "$OPTIONS_FILE")
+START_FRONTEND=$(jq -r '.start_frontend' "$OPTIONS_FILE")
 
 # Alleen backend builden bij update_source=true
 if [ "$UPDATE_SOURCE" = "true" ]; then
@@ -88,6 +89,10 @@ EOF
 # Start backend (scraper) in background
 npm start &
 
-# Start frontend (npm)
-cd /app/front-end
-npm start
+# Start frontend (npm) alleen als start_frontend true is
+if [ "$START_FRONTEND" = "true" ]; then
+  cd /app/front-end
+  npm start
+else
+  echo "[DEBUG] Front-end wordt niet gestart (start_frontend=false)."
+fi

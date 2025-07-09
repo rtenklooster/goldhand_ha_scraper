@@ -1,6 +1,6 @@
 {
   "name": "Goldhand Universal Scraper",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "slug": "gh_universal_scraper",
   "description": "Universal scraper met Telegram notificaties en web frontend.",
   "startup": "services",
@@ -14,6 +14,7 @@
     "db_url": "",
     "download_db": false,
     "update_source": true,
+    "start_frontend": true,
     "bot_token": "",
     "default_scrape_interval_minutes": 1,
     "database_type": "mssql",
@@ -33,6 +34,7 @@
     "db_url": "str?",
     "download_db": "bool",
     "update_source": "bool",
+    "start_frontend": "bool",
     "bot_token": "str",
     "default_scrape_interval_minutes": "int?",
     "database_type": "str?",
