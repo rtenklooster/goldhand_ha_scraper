@@ -5,6 +5,14 @@ set -e
 CONFIG_DIR="/config/gh_universal_scraper"
 mkdir -p "$CONFIG_DIR"
 
+# Debug: toon inhoud van de data map met timestamps
+if [ -d /data ]; then
+  echo "[DEBUG] Inhoud van /data (bestand, aanmaakdatum, wijzigingsdatum):"
+  ls -l --time=creation --time-style=long-iso /data || ls -l /data
+else
+  echo "[DEBUG] Map /data bestaat niet."
+fi
+
 # Read options from Home Assistant
 OPTIONS_FILE="/data/options.json"
 DB_URL=$(jq -r '.db_url' "$OPTIONS_FILE")
@@ -24,13 +32,19 @@ LOG_LEVEL=$(jq -r '.log_level' "$OPTIONS_FILE")
 WEB_URL=$(jq -r '.web_url' "$OPTIONS_FILE")
 ADMIN_TOKEN=$(jq -r '.admin_token' "$OPTIONS_FILE")
 
+# Zet het database pad altijd absoluut in /data
+if [[ "$DATABASE_PATH" = /* ]]; then
+  ABS_DB_PATH="$DATABASE_PATH"
+else
+  ABS_DB_PATH="/data/$DATABASE_PATH"
+fi
+
 # Download DB if requested
 if [ "$DOWNLOAD_DB" = "true" ] && [ -n "$DB_URL" ]; then
   echo "Downloading database from $DB_URL ..."
-  # Zorg dat de database exact op het pad van DATABASE_PATH komt te staan
-  DB_DIR=$(dirname "$DATABASE_PATH")
+  DB_DIR=$(dirname "$ABS_DB_PATH")
   mkdir -p "$DB_DIR"
-  curl -L "$DB_URL" -o "$DATABASE_PATH"
+  curl -L "$DB_URL" -o "$ABS_DB_PATH"
 fi
 
 # Maak .env file aan voor de scraper
@@ -38,7 +52,7 @@ cat > .env <<EOF
 TELEGRAM_BOT_TOKEN=$BOT_TOKEN
 DEFAULT_SCRAPE_INTERVAL_MINUTES=$DEFAULT_SCRAPE_INTERVAL_MINUTES
 DATABASE_TYPE=$DATABASE_TYPE
-DATABASE_PATH=$DATABASE_PATH
+DATABASE_PATH=$ABS_DB_PATH
 DATABASE_SERVER=$DATABASE_SERVER
 DATABASE_NAME=$DATABASE_NAME
 DATABASE_USERNAME=$DATABASE_USERNAME
