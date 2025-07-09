@@ -1,4 +1,4 @@
-# Universal Scraper Home Assistant Add-on
+# Goldhand Universal Scraper Add-on
 
 Deze add-on downloadt en start automatisch de Universal Scraper (met Telegram notificaties en web frontend) vanuit GitHub.
 
@@ -15,15 +15,10 @@ Deze add-on downloadt en start automatisch de Universal Scraper (met Telegram no
 - `bot_token`: Telegram bot token.
 
 ## Persistentie
-De database wordt opgeslagen in `/config/universal_scraper/scraper.db`.
+De database wordt opgeslagen in `/config/gh_universal_scraper/scraper.db`.
 
 ## Opstarten
 Na installatie en configuratie start de add-on automatisch beide componenten.
-
-## Bestanden
-- `config.json`: Add-on configuratie
-- `Dockerfile`: Build instructies
-- `run.sh`: Startscript
 
 ## Ingress
 De front-end is bereikbaar via het Home Assistant menu.

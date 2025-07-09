@@ -2,7 +2,7 @@
 set -e
 
 # Home Assistant config dir for persistent storage
-CONFIG_DIR="/config/universal_scraper"
+CONFIG_DIR="/config/gh_universal_scraper"
 mkdir -p "$CONFIG_DIR"
 
 # Read options from Home Assistant
