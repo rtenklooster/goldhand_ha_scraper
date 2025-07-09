@@ -20,7 +20,7 @@ RUN npm install
 # Build backend (nodig voor dist/index.js)
 RUN npm run build
 
-# Install frontend dependencies
+# Install frontend dependencies en build
 WORKDIR /app/front-end
 RUN npm install
 RUN npm run build

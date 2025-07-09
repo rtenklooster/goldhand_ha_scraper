@@ -33,7 +33,7 @@ LOG_LEVEL=$(jq -r '.log_level' "$OPTIONS_FILE")
 WEB_URL=$(jq -r '.web_url' "$OPTIONS_FILE")
 ADMIN_TOKEN=$(jq -r '.admin_token' "$OPTIONS_FILE")
 
-# --- Optioneel laatste code ophalen en builden ---
+# Alleen backend builden bij update_source=true
 if [ "$UPDATE_SOURCE" = "true" ]; then
   cd /app
   if [ -d .git ]; then
@@ -43,7 +43,7 @@ if [ "$UPDATE_SOURCE" = "true" ]; then
     npm run build
     cd /app/front-end
     npm install
-    npm run build
+    # GEEN npm run build meer hier
     cd /app
   else
     echo "[DEBUG] Geen .git directory gevonden, skip update."
