@@ -1,0 +1,16 @@
+De volgende bestanden/directories zijn overbodig in de hoofdmap en kunnen veilig verwijderd worden:
+
+- .gitignore
+- Dockerfile
+- README.md
+- REPOSITORY.md
+- config.json
+- icon.png
+- logo.png
+- run.sh
+- universal_scraper/
+
+Laat alleen deze staan:
+- repository.json
+- gh_universal_scraper/
+- .git (voor versiebeheer)

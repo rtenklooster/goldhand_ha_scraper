@@ -21,10 +21,10 @@ fi
 ln -sf "$CONFIG_DIR/scraper.db" /app/scraper.db
 
 # Set bot token as env var
-export BOT_TOKEN="$BOT_TOKEN"
+export TELEGRAM_BOT_TOKEN="$BOT_TOKEN"
 
-# Start backend (Python scraper) in background
-python3 main.py &
+# Start backend (scraper) in background
+npm start &
 
 # Start frontend (npm)
 cd /app/front-end

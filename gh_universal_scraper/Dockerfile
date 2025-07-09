@@ -1,8 +1,8 @@
 FROM node:20-bullseye
 
-# Install Python and git
+# Install git
 RUN apt-get update && \
-    apt-get install -y python3 python3-pip git && \
+    apt-get install -y git && \
     rm -rf /var/lib/apt/lists/*
 
 # Set workdir
@@ -11,8 +11,8 @@ WORKDIR /app
 # Clone the universal scraper repo
 RUN git clone https://github.com/rtenklooster/Universal-scraper-with-telegram-notifications.git .
 
-# Install Python requirements
-RUN pip3 install -r requirements.txt
+# Install backend dependencies
+RUN npm install
 
 # Install frontend dependencies
 WORKDIR /app/front-end
@@ -21,7 +21,7 @@ RUN npm install
 # Return to app dir
 WORKDIR /app
 
-# Copy run script
+# Copy only the run script from local context
 COPY run.sh /run.sh
 RUN chmod +x /run.sh
 
