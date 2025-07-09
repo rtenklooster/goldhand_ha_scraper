@@ -49,5 +49,6 @@
     "admin_token": "str?"
   },
   "map": ["config:rw"],
-  "arch": ["amd64", "aarch64", "armv7"]
+  "arch": ["amd64", "aarch64", "armv7"],
+  "memory": "2g"
 }
