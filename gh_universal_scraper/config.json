@@ -1,6 +1,6 @@
 {
   "name": "Goldhand Universal Scraper",
-  "version": "1.1.2",
+  "version": "1.1.3",
   "slug": "gh_universal_scraper",
   "description": "Universal scraper met Telegram notificaties en web frontend.",
   "startup": "services",
